@@ -1,0 +1,14 @@
+case $1 in
+
+reboot)
+	echo 1 > /data/media/.nextboot
+	echo 1 > /.firstrom/media/.nextboot
+	echo $2 > /data/media/.rom
+	echo $2 > /.firstrom/media/.rom
+	reboot
+	;;
+
+recovery)
+	dd if=/dev/block/platform/msm_sdcc.1/by-name/boot of=/dev/block/platform/msm_sdcc.1/by-name/recovery ;;
+
+esac

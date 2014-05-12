@@ -1,12 +1,5 @@
 #!/sbin/busybox sh
 
-cd /sbin
-
-for i in $(./busybox --list)
-do
-	./busybox ln -s busybox $i
-done
-
 cd /
 
 mount -t proc proc /proc
@@ -15,11 +8,13 @@ mount -t sysfs sysfs /sys
 mkdir -p /dev/block
 
 mknod /dev/block/mmcblk0p20 b 179 20
+mknod /dev/block/mmcblk0p23 b 179 23
 mknod /dev/block/loop0 b 7 0
 
-mount -t ext4 /dev/block/mmcblk0p20 /system
+mount -t ext4 /dev/block/mmcblk0p23 /data
 
 out() {
+	umount -f /data
 	umount -f /system
 
 	chmod 755 /init
@@ -30,6 +25,24 @@ out() {
 
 	exec /init
 }
+
+if grep -q androidboot.boot_recovery=1 /proc/cmdline ; then
+	rm -f /data/media/rebootrs
+	mv -f /res/etc /
+	mv -f /res/aosp44/* /
+	mv -f /res/recovery/* /
+	out
+fi
+
+[ -e /data/media/.rom ] || echo 1 > /data/media/.rom
+ROM=`cat /data/media/.rom`
+[ $ROM == 0 ] && ROM=1
+
+if [ "$ROM" == "1" ]; then
+	mount -t ext4 -o rw /dev/block/mmcblk0p20 /system
+else
+	mount --bind /data/media/.${ROM}rom/system /system
+fi
 
 mv -f /res/aosp44/* /
 

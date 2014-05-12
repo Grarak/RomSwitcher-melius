@@ -14,7 +14,8 @@ cat << CTAG
 		`. /res/synapse/config.json.generate.thermal`,
 		`. /res/synapse/config.json.generate.io`,
 		`. /res/synapse/config.json.generate.misc`,
-		`. /res/synapse/config.json.generate.zram`
+		`. /res/synapse/config.json.generate.zram`,
+		`. /res/synapse/config.json.generate.rs`
     ]
 }
 CTAG

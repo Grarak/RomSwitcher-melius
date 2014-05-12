@@ -42,6 +42,7 @@ service ril-qmi /system/bin/sh /init.qcom.ril.sh
 
 on fs
     mount_all fstab.qcom
+    exec /sbin/ext/mount_partitions.sh
 
     # Keeping following partitions outside fstab file. As user may not have
     # these partition flashed on the device. Failure to mount any partition in fstab file
@@ -315,12 +316,12 @@ on post-fs-data
     # NFC_BROADCOM
     chmod 0600 /dev/bcm2079x
     chown nfc nfc /dev/bcm2079x
-    mkdir /data/bcmnfc
-    mkdir /data/bcmnfc/param
-    chmod 0770 /data/bcmnfc
-    chmod 0770 /data/bcmnfc/param
-    chown nfc nfc /data/bcmnfc
-    chown nfc nfc /data/bcmnfc/param
+    mkdir /data/nfc
+    mkdir /data/nfc/param
+    chmod 0770 /data/nfc
+    chmod 0770 /data/nfc/param
+    chown nfc nfc /data/nfc
+    chown nfc nfc /data/nfc/param
 
     # MDNIE
     chown system system  /sys/class/mdnie/mdnie/lcdtype
@@ -474,11 +475,6 @@ service geomagneticd /system/bin/geomagneticd
     class late_start
     user compass
     group system input
-
-service time_daemon /system/bin/time_daemon
-    class late_start
-    user root
-    group root
 
 # bugreport is triggered by holding down volume down, volume up and power
 service bugreport /system/bin/dumpstate -d -p -B \
