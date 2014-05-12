@@ -1,0 +1,51 @@
+#!/sbin/busybox sh
+
+cat << CTAG
+{
+    name:Thermal,
+    elements:[
+	{ SSeekBar:{
+		title:"Core control mask",
+		max:100,
+		default:`cat /sys/module/msm_thermal/parameters/core_control_mask`,
+		action:"generic /sys/module/msm_thermal/parameters/core_control_mask"
+	}},
+	{ SSeekBar:{
+		title:"Core limit temperature",
+		max:100, min:50, unit:"°C",
+		default:`cat /sys/module/msm_thermal/parameters/core_limit_temp_degC`,
+		action:"generic /sys/module/msm_thermal/parameters/core_limit_temp_degC"
+	}},
+	{ SSeekBar:{
+		title:"Frequency control mask",
+		max:100,
+		default:`cat /sys/module/msm_thermal/parameters/freq_control_mask`,
+		action:"generic /sys/module/msm_thermal/parameters/freq_control_mask",
+	}},
+	{ SSeekBar:{
+		title:"Temperature Limit",
+		description:"Limit SOC highest temperature. If the temperature goes above, the thermal will throttle the CPU frequency to lower the temperature.",
+                min:60, max:100, unit:"°C",
+                action:"generic /sys/module/msm_thermal/parameters/limit_temp_degC"
+        }},
+	{ SSeekBar:{
+		title:"PSM limit temperature",
+		max:500, min:50,
+		default:`cat /sys/module/msm_thermal/parameters/poll_ms`,
+		action:"generic /sys/module/msm_thermal/parameters/poll_ms"
+	}},
+	{ SSeekBar:{
+		title:"Thermal limit high",
+		max:100,
+		default:`cat /sys/module/msm_thermal/parameters/thermal_limit_high`,
+		action:"generic /sys/module/msm_thermal/parameters/thermal_limit_high"
+	}},
+	{ SSeekBar:{
+		title:"Thermal limit low",
+		max:100,
+		default:`cat /sys/module/msm_thermal/parameters/thermal_limit_low`,
+		action:"generic /sys/module/msm_thermal/parameters/thermal_limit_low"
+	}},
+    ]
+}
+CTAG

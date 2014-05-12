@@ -1,0 +1,6 @@
+*~
+kernel.zip
+ramdisk.gz
+boot.img
+.DS_Store
+boot.img-ramdisk/sbin/version

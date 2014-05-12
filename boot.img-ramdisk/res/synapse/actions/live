@@ -1,0 +1,19 @@
+CPU="$(expr `cat /sys/devices/platform/msm8930-tmu/curr_temp` / 10)°C"
+BATTERY="$(expr `cat /sys/devices/platform/sec-battery/power_supply/battery/temp` / 10)°C"
+GPUFREQ="$(expr `cat /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/gpuclk` / 1000000)MHz"
+
+if [ ! -f /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq ]; then
+	CPUFREQ=???
+else
+	CPUFREQ="$(expr `cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq` / 1000)MHz"
+fi
+
+
+case $1 in
+	cpufreq)
+		echo $CPUFREQ ;;
+	temp)
+		echo CPU: $CPU Battery: $BATTERY;;
+	gpufreq)
+		echo $GPUFREQ ;;
+esac

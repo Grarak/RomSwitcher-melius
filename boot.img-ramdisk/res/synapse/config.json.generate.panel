@@ -1,0 +1,51 @@
+#!/sbin/busybox sh
+
+cat << CTAG
+{
+    name:Panel,
+    elements:[
+	{ STitleBar:{
+                title:"mDNIe global controls"
+        }},
+	{ SDescription:{
+		description:"mobile Digital Natural Image engine control. Samsungs hardware image post-processor controls virtually any image manipulation."
+	}},
+	{ SCheckBox:{
+		description:"Disable this to make white brighter at low brightness (this has impact of battery life).",
+                label:"Content Adaptive Brightness",
+                action:"mdnie cabc"
+        }},
+	{ SCheckBox:{
+                label:"Negative Mode",
+		default:`cat /sys/class/mdnie/mdnie/negative`,
+                action:"generic /sys/class/mdnie/mdnie/negative"
+        }},
+	{ SOptionList:{
+		title:"Scenario",
+                action:"mdnie scenario",
+                values:[
+			UI,
+			Video,
+			Video-Warm,
+			Video-Cold,
+			Camera,
+			Navigation,
+			Gallery,
+			VT,
+			Browser,
+			eBook,
+                ]
+        }},
+	{ SOptionList:{
+		title:"Mode",
+                action:"mdnie mode",
+                values:[
+			Standard,
+			Dynamic,
+			Movie,
+			Natural,
+                ]
+        }},
+    ]
+}
+CTAG

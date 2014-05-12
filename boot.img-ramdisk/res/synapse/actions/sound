@@ -1,0 +1,18 @@
+if [[ ! -z $2 ]]; then
+	if [ "$1" == "/sys/kernel/sound_control/gpl_headphone_gain" ]; then
+		echo $(($2+40)) $(($2+40)) > $1
+	elif [ "$1" == "/sys/kernel/sound_control/gpl_headphone_pa_gain" ]; then
+		echo $(($2+12)) $(($2+12)) > $1
+	else
+		echo $(($2+40)) > $1
+	fi
+fi
+
+for VALUE in `cat $1`; do
+	GAIN=$VALUE
+done
+if [ "$1" == "/sys/kernel/sound_control/gpl_headphone_pa_gain" ]; then
+	echo $(($GAIN-12))
+else
+	echo $(($GAIN-40))
+fi

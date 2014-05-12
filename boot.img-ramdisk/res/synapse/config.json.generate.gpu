@@ -1,0 +1,65 @@
+#!/sbin/busybox sh
+
+cat << CTAG
+{
+    name:GPU,
+    elements:[
+	{ STitleBar:{
+		title:"GPU Frequency scaling"
+	}},
+	{ SLiveLabel:{
+		title:"GPU Frequency",
+		refresh:500,
+		action:"live gpufreq"
+	}},
+	{ SSeekBar:{
+       		title:"GPU Max Frequency",
+                unit:"MHz", weight:0.000001,
+		description:"Set the maximum freqency the GPU scales up to",
+		default:`cat /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_gpuclk`,
+		action:"generic /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_gpuclk",
+		values:[
+`
+		for FREQ in \`cat /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/gpu_available_frequencies\`; do
+    			echo \`expr $FREQ\`,
+		done
+`
+		]
+	}},
+	{ STitleBar:{
+		title:"GPU Governor"
+	}},
+	{ SOptionList:{
+		description:"The GPU governor determines how the GPU behaves in response to changes in workload. Changing the governor will impact how the GPU scales through the frequency steps available to you GPU.",
+                default:`cat /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/trustzone/governor`,
+                action:"generic /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/trustzone/governor",
+                values:[
+			performance,
+			ondemand,
+			simple,
+                ]
+        }},
+	{ STitleBar:{
+       		title:"GPU Voltage Control"
+        }},
+	{ SDescription:{
+		description:"There are 3 values that msm uses, Low, Nominal and High: which basically equates into the 200 mhz, 320 mhz and xxx mhz steps"
+	}},
+	{ SSeekBar:{
+       		title:"Low",
+                min:700000, max:1300000, unit:"mv", step:25000, weight:0.001,
+                action:"gpuvolt low"
+	}},
+	{ SSeekBar:{
+       		title:"Nominal",
+                min:700000, max:1300000, unit:"mv", step:25000, weight:0.001,
+                action:"gpuvolt nominal"
+	}},
+	{ SSeekBar:{
+       		title:"High",
+                min:700000, max:1300000, unit:"mv", step:25000, weight:0.001,
+                action:"gpuvolt high"
+	}},
+    ]
+}
+CTAG

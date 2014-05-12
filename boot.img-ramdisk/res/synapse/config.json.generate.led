@@ -1,0 +1,139 @@
+#!/sbin/busybox sh
+
+cat << CTAG
+{
+    name:LED,
+    elements:[
+	{ SPane:{ 
+		title:"Brightness",
+		description:"The notification LED has two brightness modes, depending on the external brightness detected by the light sensor."
+	}},
+	{ SSeekBar:{
+		title:"Low light environment brightness",
+		min:1, max:20,
+		default:`cat /sys/class/sec/led/led_lowpower_current`,
+                action:"generic /sys/class/sec/led/led_lowpower_current"
+	}},
+	{ SSeekBar:{
+		title:"Bright light environment brightness",
+		min:1, max:20,
+		default:`cat /sys/class/sec/led/led_highpower_current`,
+                action:"generic /sys/class/sec/led/led_highpower_current"
+	}},
+	{ STitleBar:{
+		title:"LED Color Addends"
+        }},
+	{ SDescription:{
+		description:"These controls will globally adjust the LED colors, since not all devices are the same. When the LED pattern is set, each color will first have the below values added (or subtracted) from their respective channel."
+	}},
+        { SSeekBar:{
+       		title:"Red LED Addend",
+		description:"Control for the red LED. Setting this to a positive value will increase red, and a negative value will decrease red.",
+		default:`cat /sys/class/sec/led/addend_red`,
+		max:255, min:-255, step:5,
+		action:"generic /sys/class/sec/led/addend_red"
+	}},
+	{ SSeekBar:{
+       		title:"Green LED Addend",
+		description:"Control for the green LED. Setting this to a positive value will increase green, and a negative value will decrease green. The green LED is often brighter than the others, and is therefore reduced by default so that the color yellow displays correctly.",
+		default:`cat /sys/class/sec/led/addend_green`,
+		max:255, min:-255, step:5,
+		action:"generic /sys/class/sec/led/addend_green"
+	}},
+	{ SSeekBar:{
+       		title:"Blue LED Addend",
+		description:"Control for the blue LED. Setting this to a positive value will increase green, and a negative value will decrease green.",
+		default:`cat /sys/class/sec/led/addend_blue`,
+		max:255, min:-255, step:5,
+		action:"generic /sys/class/sec/led/addend_blue"
+	}},
+	{ STitleBar:{
+		title:"LED White Balance"
+        }},
+	{ SDescription:{
+		description:"These controls allow you to adjust how pure white is displayed by the LEDs, since not all devices are the same. When the LED pattern is set, and a neutral color is called for, each color will first have the below percentages removed from their respective channel."
+	}},
+        { SSeekBar:{
+       		title:"LED White Balance - Red Reduction",
+		description:"Controls white percentage of red will be reduced when displaying a neutral color. It is suggested to not reduce red (leave it at 0%) and only reduce blue and green.",
+		default:`cat /sys/class/sec/led/white_red`,
+		max:100, step:5, unit:"%",
+		action:"generic /sys/class/sec/led/white_red"
+	}},
+	{ SSeekBar:{
+       		title:"LED White Balance - Green Reduction",
+		description:"Controls white percentage of red will be reduced when displaying a neutral color.",
+		default:`cat /sys/class/sec/led/white_green`,
+		max:100, step:5, unit:"%",
+		action:"generic /sys/class/sec/led/white_green"
+	}},
+	{ SSeekBar:{
+       		title:"LED White Balance - Blue Reduction",
+		description:"Controls white percentage of red will be reduced when displaying a neutral color.",
+		default:`cat /sys/class/sec/led/white_blue`,
+		max:100, step:5, unit:"%",
+		action:"generic /sys/class/sec/led/white_blue"
+	}},
+	{ STitleBar:{ 
+		title:"Blinking effect"
+	}},
+	{ SDescription:{
+		description:"Control the way the LED blinks."
+	}},
+	{ SCheckBox:{
+		description:"If disabled, the controller bypasses slope generation.", 
+		label:"Enable LED fading",
+		default:`cat /sys/class/sec/led/led_fade`,
+                action:"generic /sys/class/sec/led/led_fade"
+	}},
+	{ SSeekBar:{
+		title:"Fade-in time period",
+		description:"Sets the time period of the rising slope.",
+		max:12,
+		default:`cat /sys/class/sec/led/led_fade_in_time`,
+                action:"generic /sys/class/sec/led/led_fade_in_time"
+	}},
+	{ SSeekBar:{
+		title:"Fade-out time period",
+		description:"Sets the time period of the falling slope.",
+		max:12,
+		default:`cat /sys/class/sec/led/led_fade_out_time`,
+                action:"generic /sys/class/sec/led/led_fade_out_time"
+	}},
+        { SSeekBar:{
+                title:"Slope 1 detention time",
+                description:"The LED is controlled by PWM/pulse wave modulation, the detention time dictates how long the controller spends time on a single step in its slope. One time-unit is equivalent to 4ms.",
+                max:12,
+                default:`cat /sys/class/sec/led/led_fade_dt1`,
+                action:"generic /sys/class/sec/led/led_fade_dt1"
+        }},
+        { SSeekBar:{
+                title:"Slope 2 detention time",
+                max:12,
+                default:`cat /sys/class/sec/led/led_fade_dt2`,
+                action:"generic /sys/class/sec/led/led_fade_dt2"
+        }},
+        { SSeekBar:{
+                title:"Slope 3 detention time",
+                max:12,
+                default:`cat /sys/class/sec/led/led_fade_dt3`,
+                action:"generic /sys/class/sec/led/led_fade_dt3"
+        }},
+        { SSeekBar:{
+                title:"Slope 4 detention time",
+                max:12,
+                default:`cat /sys/class/sec/led/led_fade_dt4`,
+                action:"generic /sys/class/sec/led/led_fade_dt4"
+        }},
+	{ SButton:{
+		label:"Test Notification",
+		action:"led 3"
+	}},
+	{ SButton:{
+		label:"Stop Notification",
+		action:"led 0"
+	}},
+    ]
+}
+
+CTAG

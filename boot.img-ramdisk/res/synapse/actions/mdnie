@@ -1,0 +1,112 @@
+cabc() {
+	FILE=/sys/class/mdnie/mdnie/cabc
+	if [[ ! -z $2 ]]; then
+		echo $2 > $FILE
+	fi
+
+	if grep -q Disabled $FILE ; then
+		echo 0
+	else
+		echo 1
+	fi
+}
+
+scenario() {
+	FILE=/sys/devices/virtual/mdnie/mdnie/scenario
+	if [[ ! -z $2 ]]; then
+		case $2 in
+		UI)
+			echo 0 > $FILE ;;
+		Video)
+			echo 1 > $FILE ;;
+		Video-Warm)
+			echo 2 > $FILE ;;
+		Video-Cold)
+			echo 3 > $FILE ;;
+		Camera)
+			echo 4 > $FILE ;;
+		Navigation)
+			echo 5 > $FILE ;;
+		Gallery)
+			echo 6 > $FILE ;;
+		VT)
+			echo 7 > $FILE ;;
+		Browser)
+			echo 8 > $FILE ;;
+		eBook)
+			echo 9 > $FILE ;;
+		esac
+	fi
+
+	if grep -q 0 $FILE ; then
+		echo UI
+	elif grep -q 1 $FILE ; then
+		echo Video
+	elif grep -q 2 $FILE ; then
+		echo Video-Warm
+	elif grep -q 3 $FILE ; then
+		echo Video-Cold
+	elif grep -q 4 $FILE ; then
+		echo Camera
+	elif grep -q 5 $FILE ; then
+		echo Navigation
+	elif grep -q 6 $FILE ; then
+		echo Gallery
+	elif grep -q 7 $FILE ; then
+		echo VT
+	elif grep -q 8 $FILE ; then
+		echo Browser
+	elif grep -q 9 $FILE ; then
+		echo eBook
+	fi
+}
+
+mode() {
+	FILE=/sys/devices/virtual/mdnie/mdnie/mode
+	if [[ ! -z $2 ]]; then
+		case $2 in
+		Standard)
+			echo 0 > $FILE ;;
+		Dynamic)
+			echo 1 > $FILE ;;
+		Movie)
+			echo 2 > $FILE ;;
+		Natural)
+			echo 3 > $FILE ;;
+		esac
+	fi
+
+	if grep -q STANDARD $FILE ; then
+		echo standard
+	elif grep -q DYNAMIC $FILE ; then
+		echo dynamic
+	elif grep -q MOVIE $FILE ; then
+		echo movie
+	elif grep -q NATURAL $FILE ; then
+		echo natural
+	fi
+}
+
+case $1 in
+cabc)
+	if [[ ! -z $2 ]]; then
+		cabc $1 $2
+	else
+		cabc $1
+	fi
+	;;
+scenario)
+	if [[ ! -z $2 ]]; then
+		scenario $1 $2
+	else
+		scenario $1
+	fi
+	;;
+mode)
+	if [[ ! -z $2 ]]; then
+		mode $1 $2
+	else
+		mode $1
+	fi
+	;;
+esac
