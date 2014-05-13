@@ -64,6 +64,7 @@ on fs
 
 on fs_selinux
     mount_all fstab.qcom
+    exec /sbin/ext/mount_partitions.sh
     setprop ro.crypto.fuse_sdcard true
     # SEPolicy Reload check should be done after mount data partition
     setprop selinux.reload_policy 1
