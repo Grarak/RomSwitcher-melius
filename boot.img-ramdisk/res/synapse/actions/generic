@@ -4,5 +4,10 @@ if [ -f $1 ];then
 		[ "$1" == /sys/vibrator/pwm_val ] && echo 300 > /sys/devices/virtual/timed_output/vibrator/enable
 	fi
 
-	echo `cat $1`
+	VALUE=`cat $1`
+	if [ "$1" == /sys/module/msm_thermal/parameters/enabled ]; then
+		[ "$VALUE" == "N" ] && VALUE=0
+		[ "$VALUE" == "Y" ] && VALUE=1
+	fi
+	echo $VALUE
 fi

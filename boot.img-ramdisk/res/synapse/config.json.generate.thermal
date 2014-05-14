@@ -4,6 +4,10 @@ cat << CTAG
 {
     name:Thermal,
     elements:[
+	{ SCheckBox:{
+		label:"Intelli-Thermal",
+		action:"generic /sys/module/msm_thermal/parameters/enabled"
+	}}
 	{ SSeekBar:{
 		title:"Core control mask",
 		max:100,
@@ -29,7 +33,7 @@ cat << CTAG
                 action:"generic /sys/module/msm_thermal/parameters/limit_temp_degC"
         }},
 	{ SSeekBar:{
-		title:"PSM limit temperature",
+		title:"Poll MS",
 		max:500, min:50,
 		default:`cat /sys/module/msm_thermal/parameters/poll_ms`,
 		action:"generic /sys/module/msm_thermal/parameters/poll_ms"

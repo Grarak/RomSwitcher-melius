@@ -2,7 +2,7 @@
 
 cat << CTAG
 {
-    name:CPU,
+    name:Voltage,
     elements:[
 	{ SDescription:{
                 description:"Decreasing voltage will lower power consumption of the CPU. Increasing it on overclocked frequencies improves stability. Too low voltage may cause instabilities and freezes."
