@@ -10,13 +10,13 @@ cat << CTAG
 	}},
 	{ SSeekBar:{
 		title:"Low light environment brightness",
-		min:1, max:20,
+		min:1, max:120, unit:"mA", weight:0.125,
 		default:`cat /sys/class/sec/led/led_lowpower_current`,
                 action:"generic /sys/class/sec/led/led_lowpower_current"
 	}},
 	{ SSeekBar:{
 		title:"Bright light environment brightness",
-		min:1, max:20,
+		min:1, max:120, unit:"mA", weight:0.125,
 		default:`cat /sys/class/sec/led/led_highpower_current`,
                 action:"generic /sys/class/sec/led/led_highpower_current"
 	}},
@@ -125,14 +125,6 @@ cat << CTAG
                 default:`cat /sys/class/sec/led/led_fade_dt4`,
                 action:"generic /sys/class/sec/led/led_fade_dt4"
         }},
-	{ SButton:{
-		label:"Test Notification",
-		action:"led 3"
-	}},
-	{ SButton:{
-		label:"Stop Notification",
-		action:"led 0"
-	}},
     ]
 }
 
