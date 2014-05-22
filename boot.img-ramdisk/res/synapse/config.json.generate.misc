@@ -4,34 +4,6 @@ cat << CTAG
 {
     name:Misc,
     elements:[
-	{ STitleBar:{
-		title:"Battery"
-	}},
-	{ SDescription:{
-		description:"Device charging currents are composed of input current coming into the device (Nominal 5V) and charge current fed to the battery (Battery Charge Voltage). Charger detection divides charging cable types into several categories as described below. If charging current exceeds input load, then charging current is dynamically adjusted. For avoiding battery deterioration, charging currents of less than 0.7 Coloumb are advised; ex. 2600mAh (Capacity) * 0.7C = ~1820mA."
-	}},
-	{ SLiveLabel:{
-                  action:"charge-source"
-        }},
-	{ SLiveLabel:{
-                  action:"echo \"Average: \$(cat /sys/devices/platform/sec-battery/power_supply/battery/current_avg)mA\""
-        }},
-	{ SLiveLabel:{
-                  action:"echo \"Now: \$(cat /sys/devices/platform/sec-battery/power_supply/battery/current_now)mA\""
-        }},
-
-	{ SDescription:{ 
-		description:"Input is the live current limit coming through the USB port into the device at 5V. Charge is the desired target current to charge the battery. Now is the actual current limit applied to the battery."
-	}},
-	{ SCheckBox:{
-		description:"Enable this will increase the charing speed with USB, but disable usb mass storage.",
-                label:"Force Fast Charge",
-                default:`cat /sys/kernel/fast_charge/force_fast_charge`,
-                action:"generic /sys/kernel/fast_charge/force_fast_charge"
-        }},
-	{ STitleBar:{
-		title:"Other Settings"
-	}},
 	{ SCheckBox:{
                 description:"Kernel SamePage Merging lets the hypervisor system share identical memory pages amongst different processes or virtualized guests. This is done by scanning through the memory finding duplicate pages. The duplicate pair is then merged into a single page, and mapped into both original locations.",
                 label:"Enable KSM",
@@ -49,6 +21,10 @@ cat << CTAG
 		title:"Vibration Control", max:100,
 		default:`cat /sys/vibrator/pwm_val`,
                 action:"generic /sys/vibrator/pwm_val"
+        }},
+	{ SButton:{
+		label:"Test vibration",
+                action:"echo 300 > /sys/devices/virtual/timed_output/vibrator/enable"
         }},
     ]
 }

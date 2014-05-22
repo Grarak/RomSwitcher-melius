@@ -12,8 +12,10 @@ fi
 case $1 in
 	cpufreq)
 		echo $CPUFREQ ;;
-	temp)
-		echo CPU: $CPU Battery: $BATTERY;;
+	cputemp)
+		echo $CPU ;;
 	gpufreq)
 		echo $GPUFREQ ;;
+	batterytemp)
+		echo $BATTERY ;;
 esac

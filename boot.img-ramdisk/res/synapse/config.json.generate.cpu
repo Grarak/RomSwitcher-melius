@@ -6,12 +6,9 @@ cat << CTAG
 {
     name:CPU,
     elements:[
-	{ STitleBar:{
-		title:"Temperature"
-	}},
 	{ SLiveLabel:{
 		refresh:500,
-		action:"live temp"
+		action:"live cputemp"
 	}},
 	{ STitleBar:{
 		title:"CPU Frequency scaling"
@@ -64,7 +61,7 @@ cat << CTAG
                 title:"IntelliPlug"
         }},
 	{ SCheckBox:{
-		description:"IntelliPlug is a total replacement for Qualcomm's proprietary MPDecsion. It hotplugs/unplugs CPU cores based on load demand of the system. MPDecision is a closed source proprietary solution from Qualcomm and it is not very efficient at hotpluging/unpluging CPU cores leading to hotter cpu and poor battery. Faux's IntelliPlug is a complete Open Source solution to MPDecision and it is done in kernel instead of userspace (which it has to poll the kernel in order to make its decisions therefore inherently slower than in kernel solution like IntelliPlug).",
+		description:"IntelliPlug is a total replacement for Qualcomm's proprietary MPDecsion. It hotplugs/unplugs CPU cores based on load demand of the system.",
                 label:"Enable IntelliPlug",
                 default:`cat /sys/module/intelli_plug/parameters/intelli_plug_active`,
                 action:"generic /sys/module/intelli_plug/parameters/intelli_plug_active"

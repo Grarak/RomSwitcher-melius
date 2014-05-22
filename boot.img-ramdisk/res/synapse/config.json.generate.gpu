@@ -39,27 +39,6 @@ cat << CTAG
 			simple,
                 ]
         }},
-	{ STitleBar:{
-       		title:"GPU Voltage Control"
-        }},
-	{ SDescription:{
-		description:"There are 3 values that msm uses, Low, Nominal and High: which basically equates into the 200 mhz, 320 mhz and xxx mhz steps"
-	}},
-	{ SSeekBar:{
-       		title:"Low",
-                min:700000, max:1300000, unit:"mv", step:25000, weight:0.001,
-                action:"gpuvolt low"
-	}},
-	{ SSeekBar:{
-       		title:"Nominal",
-                min:700000, max:1300000, unit:"mv", step:25000, weight:0.001,
-                action:"gpuvolt nominal"
-	}},
-	{ SSeekBar:{
-       		title:"High",
-                min:700000, max:1300000, unit:"mv", step:25000, weight:0.001,
-                action:"gpuvolt high"
-	}},
     ]
 }
 CTAG
