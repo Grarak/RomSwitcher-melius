@@ -13,7 +13,7 @@ while read FREQ UVOLT; do
 	default:'$UVOLT',
 	title:"'\`expr ${FREQ//\:/} \/ 1000\`' MHz",
 	action:"cpuvolt '${FREQ}'",
-	unit:"mV", weight:0.001, min:800000, step:6250, max:1562500 }},'
+	unit:"mV", weight:0.001, min:600000, step:6250, max:1450000 }},'
 done < /sys/devices/system/cpu/cpufreq/vdd_table/vdd_levels
 `
     ]
