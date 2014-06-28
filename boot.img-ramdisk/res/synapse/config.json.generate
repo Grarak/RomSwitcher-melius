@@ -7,6 +7,7 @@ cat << CTAG
 		`. /res/synapse/config.json.generate.cpu`,
 		`. /res/synapse/config.json.generate.governor`,
                 `. /res/synapse/config.json.generate.voltage`,
+		`. /res/synapse/config.json.generate.cpuboost`,
 		`. /res/synapse/config.json.generate.gpu`,
 		`. /res/synapse/config.json.generate.panel`,
 		`. /res/synapse/config.json.generate.led`,
