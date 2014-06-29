@@ -58,6 +58,14 @@ cat << CTAG
 		}
         }},
 	{ STitleBar:{
+                title:"MPDecision"
+        }},
+	{ SCheckBox:{
+		label:"Enable MPDecision",
+		description:"Stock Qualcomm hotplug driver and frequency service. This should be disabled if current kernel has an alternative.",
+		action:"mpdecision"
+	}},
+	{ STitleBar:{
                 title:"IntelliPlug"
         }},
 	{ SCheckBox:{
